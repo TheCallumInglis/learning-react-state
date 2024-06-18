@@ -8,6 +8,7 @@ const App = () => {
   const [team, setTeam] = useState([])
   const [money, setMoney] = useState(100)
   const [totalStrength, setTotalStrength] = useState(0)
+  const [totalAgility, setTotalAgility] = useState(0)
   const [zombieFighters, setZombieFighters] = useState(
     [
       {
@@ -93,13 +94,26 @@ const App = () => {
     setMoney(money - fighter.price);
   }
 
+  const handleRemoveFighter = (fighter) => {
+    const newTeam = team.filter((teamFighter) => teamFighter.name !== fighter.name);
+
+    setTeam(newTeam);
+    setMoney(money + fighter.price);
+  }
+
   useEffect(() => {
     const calculateTotalStrength = () => {
-      const totalStrength = team.reduce((total, fighter) => total + fighter.strength, 0);
-      setTotalStrength(totalStrength);
+      const strength = team.reduce((total, fighter) => total + fighter.strength, 0);
+      setTotalStrength(strength);
+    }
+
+    const calculateTotalAgility = () => {
+      const agility = team.reduce((total, fighter) => total + fighter.agility, 0);
+      setTotalAgility(agility);
     }
 
     calculateTotalStrength();
+    calculateTotalAgility();
   }, [team]);
 
   return (
@@ -107,6 +121,7 @@ const App = () => {
       <h2>Money: <span>{money}</span></h2>
 
       <h2>Total Strength: <span>{totalStrength}</span></h2>
+      <h2>Total Agility: <span>{totalAgility}</span></h2>
 
       <h2>Team</h2>
       <div>
@@ -114,7 +129,7 @@ const App = () => {
           ? <p>Pick some team members!</p>
           : <ul>
               {team.map((fighter, index) => (
-                <Fighter fighter={fighter} handleAddFighter={handleAddFighter} action="remove" key={index} />
+                <Fighter fighter={fighter} handler={handleRemoveFighter} action="Remove" key={index} />
               ))}
             </ul>
         }
@@ -123,7 +138,7 @@ const App = () => {
       <h2>Fighters</h2>
       <ul>
         {zombieFighters.map((fighter, index) => (
-          <Fighter fighter={fighter} handleAddFighter={handleAddFighter} action="add" key={index} />
+          <Fighter fighter={fighter} handler={handleAddFighter} action="Add" key={index} />
         ))}
       </ul>
     </>
