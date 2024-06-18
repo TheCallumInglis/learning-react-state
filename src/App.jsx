@@ -5,7 +5,7 @@ import './App.css'
 
 const App = () => {
   const [team, setTeam] = useState([])
-  const [money, setMoney] = useState(0)
+  const [money, setMoney] = useState(100)
   const [zombieFighters, setZombieFighters] = useState(
     [
       {
@@ -83,6 +83,7 @@ const App = () => {
 
   return (
     <>
+      <h2>Money: <span>{money}</span></h2>
       <h2>Fighters</h2>
       <ul>
         {zombieFighters.map((fighter, index) => (
