@@ -1,7 +1,7 @@
 const Fighter = (props) => {
     return (
         <li key={props.fighter.index}>
-            <img src={props.fighter.img} alt={props.fighter.name} />
+            <img src={`${props.fighter.img}?text=${props.fighter.name}`} alt={props.fighter.name} />
             <p>{props.fighter.name}</p>
             <p>Price: <span>{props.fighter.price}</span></p>
             <p>Strength: <span>{props.fighter.strength}</span></p>
