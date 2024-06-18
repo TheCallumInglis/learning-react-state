@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -7,6 +7,7 @@ import Fighter from './components/FighterComponent'
 const App = () => {
   const [team, setTeam] = useState([])
   const [money, setMoney] = useState(100)
+  const [totalStrength, setTotalStrength] = useState(0)
   const [zombieFighters, setZombieFighters] = useState(
     [
       {
@@ -83,8 +84,6 @@ const App = () => {
   )
 
   const handleAddFighter = (fighter) => {
-    console.log(fighter);
-
     if (money < fighter.price) {
       console.log('Not enough money');
       return;
@@ -94,9 +93,20 @@ const App = () => {
     setMoney(money - fighter.price);
   }
 
+  useEffect(() => {
+    const calculateTotalStrength = () => {
+      const totalStrength = team.reduce((total, fighter) => total + fighter.strength, 0);
+      setTotalStrength(totalStrength);
+    }
+
+    calculateTotalStrength();
+  }, [team]);
+
   return (
     <>
       <h2>Money: <span>{money}</span></h2>
+
+      <h2>Total Strength: <span>{totalStrength}</span></h2>
 
       <h2>Team</h2>
       <div>
@@ -104,7 +114,7 @@ const App = () => {
           ? <p>Pick some team members!</p>
           : <ul>
               {team.map((fighter, index) => (
-                <Fighter fighter={fighter} key={index} />
+                <Fighter fighter={fighter} handleAddFighter={handleAddFighter} action="remove" key={index} />
               ))}
             </ul>
         }
@@ -113,7 +123,7 @@ const App = () => {
       <h2>Fighters</h2>
       <ul>
         {zombieFighters.map((fighter, index) => (
-          <Fighter fighter={fighter} handleAddFighter={handleAddFighter} key={index} />
+          <Fighter fighter={fighter} handleAddFighter={handleAddFighter} action="add" key={index} />
         ))}
       </ul>
     </>

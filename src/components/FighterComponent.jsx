@@ -7,7 +7,10 @@ const Fighter = (props) => {
             <p>Strength: <span>{props.fighter.strength}</span></p>
             <p>Agility: <span>{props.fighter.agility}</span></p>
             <div>
-                <button type="button" onClick={() => props.handleAddFighter(props.fighter)}>Add</button>
+                {props.action === 'add' 
+                    ? <button type="button" onClick={() => props.handleAddFighter(props.fighter)}>Add</button>
+                    : <button type="button" onClick={() => props.handleAddFighter(props.fighter)}>Remove</button>
+                }
             </div>
         </li>
     )
