@@ -90,6 +90,11 @@ const App = () => {
       return;
     }
 
+    if (team.find((teamFighter) => teamFighter.name === fighter.name)) {
+      console.log('Fighter already in team'); 
+      return;
+    }
+
     setTeam([...team, fighter]);
     setMoney(money - fighter.price);
   }
