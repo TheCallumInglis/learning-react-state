@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import Fighter from './components/FighterComponent'
 
 const App = () => {
   const [team, setTeam] = useState([])
@@ -96,19 +97,23 @@ const App = () => {
   return (
     <>
       <h2>Money: <span>{money}</span></h2>
+
+      <h2>Team</h2>
+      <div>
+        {team.length == 0 
+          ? <p>Pick some team members!</p>
+          : <ul>
+              {team.map((fighter, index) => (
+                <Fighter fighter={fighter} key={index} />
+              ))}
+            </ul>
+        }
+      </div>
+
       <h2>Fighters</h2>
       <ul>
         {zombieFighters.map((fighter, index) => (
-          <li key={index}>
-            <img src={fighter.img} alt={fighter.name} />
-            <p>{fighter.name}</p>
-            <p>Price: <span>{fighter.price}</span></p>
-            <p>Strength: <span>{fighter.strength}</span></p>
-            <p>Agility: <span>{fighter.agility}</span></p>
-            <div>
-              <button type="button" onClick={() => handleAddFighter(fighter)}>Add</button>
-            </div>
-          </li>
+          <Fighter fighter={fighter} handleAddFighter={handleAddFighter} key={index} />
         ))}
       </ul>
     </>
